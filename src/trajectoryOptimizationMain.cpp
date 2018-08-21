@@ -29,7 +29,7 @@ int main(int argv, char* argc[])
   const int kinematicDimension = worldDimension * 2;
   const int controlDimension = worldDimension;
   const int timePointDimension = kinematicDimension + controlDimension;
-  const int numTimePoints = 250;
+  const int numTimePoints = 80;
   const double timeStepSize = 0.1;
   
   mjModel* m = NULL;
@@ -37,7 +37,7 @@ int main(int argv, char* argc[])
   mj_activate("../mjkey.txt");    
   // load and compile model
   char error[1000] = "ERROR: could not load binary model!";
-  m = mj_loadXML("../model/ball.xml", 0, error, 1000);
+  m = mj_loadXML("../model/ball2.xml", 0, error, 1000);
   d = mj_makeData(m);
   
   const dynamic::DynamicFunctionMujoco mujocoDynamics = dynamic::GetAccelerationUsingMujoco(m, d, worldDimension, timeStepSize);
