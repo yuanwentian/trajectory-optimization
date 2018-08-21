@@ -2,9 +2,9 @@ cmake_minimum_required(VERSION 3.8)
 set(CMAKE_CXX_STANDARD 17)
 
 option(traj_opt_build_tests "Build all of trajectoryOptimization's own tests." OFF)
-option(traj_opt_build_simulate "Build simulate from Mujoco." ON)
+option(traj_opt_build_simulate "Build simulate from Mujoco." OFF)
 if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR) # if building as top-level
-	option(traj_opt_build_samples "Build all of trajectoryOptimization's own samples." OFF)
+	option(traj_opt_build_samples "Build all of trajectoryOptimization's own samples." ON)
 else()
 	option(traj_opt_build_samples "Build all of trajectoryOptimization's own samples." OFF)
 endif()
@@ -44,12 +44,12 @@ if (traj_opt_build_tests)
 endif()
 
 if (traj_opt_build_samples)
-	add_executable(123 src/applyForceOnBall.cpp)
+	add_executable(trajectoryOptimizationSample src/trajectoryOptimizationMain.cpp)
 	message(${IPOPT_FOUND})
 	message(${IPOPT_INCLUDE_DIRS})
 	message(${IPOPT_DIR})
 	#target_include_directories(trajectoryOptimizationSample PRIVATE ${IPOPT_DIR}/include)
-	target_link_libraries(123
+	target_link_libraries(trajectoryOptimizationSample
 		PUBLIC
 			Ipopt::Ipopt Rangev3::Rangev3 Mujoco::Mujoco
 		PRIVATE
