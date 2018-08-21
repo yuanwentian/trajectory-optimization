@@ -97,12 +97,77 @@ void scroll(GLFWwindow* window, double xoffset, double yoffset)
 }
 
 // apply force on the ball by set d -> ctrl
-void applyForceOnModel(const mjModel* m, mjData* d)
-{
+void applyForceByModifyDctrl(const mjModel* m, mjData* d)
+{   
+    // 1. modify d -> ctrl
     if (d -> time > 20 && d -> time < 30)
         d -> ctrl[1] = {-40.0};
-    if (d -> time >=30)
+    if (d -> time >=30 && d -> time < 50)
         d -> ctrl[1] = {40.0};
+    if (d -> time >= 50 && d -> time <60)
+        d -> ctrl[1] = {-40.0};
+     if (d -> time >= 60)
+        d -> ctrl[1] = {0};
+}
+
+void applyForceByModifyDqfrc_applied(const mjModel* m, mjData* d, double force, int direction)
+{
+    // 2. modify d -> qfrc_applied, nv * 1
+    if (d -> time > 20 && d -> time < 30)
+        d -> qfrc_applied[direction] = {-1 * force};
+    if (d -> time >=30 && d -> time < 50)
+        d -> qfrc_applied[direction] = {0};
+    // if (d -> time >= 50 && d -> time <60)
+    //     d -> qfrc_applied[direction] = {-1 * force};
+    // if (d -> time >= 60)
+    //     d -> qfrc_applied[direction] = {0};
+}
+
+void applyForceByModifyDxfrc_applied(const mjModel* m, mjData* d)
+{
+    // 3. modify d -> xfrc_applied, nbody * 6
+    // xfrc_applied: 6 - left, 7 - up, 9 - down, 10 - right
+    if (d -> time > 20 && d -> time < 30)
+        d -> xfrc_applied[7] = {-40.0};
+    if (d -> time >=30 && d -> time < 50)
+        d -> xfrc_applied[7] = {40.0};
+    if (d -> time >= 50 && d -> time <60)
+        d -> xfrc_applied[7] = {-40.0};
+    if (d -> time >= 60)
+        d -> xfrc_applied[7] = {0};
+}
+
+// using mj_applyFT function 
+bool flag1 = 0, flag2 = 0, flag3 = 0;
+void applyForceByMj_applyFT(const mjModel* m, mjData* d)
+{
+    mjtNum force[3] = {};
+    
+    if ((d -> time > 20) && (flag1 == 0))
+    {
+        force[1] = -100;
+        flag1 = 1;
+    }
+    else if (d -> time > 30 && flag2 == 0)
+    {
+        force[1] = 200;
+        flag2 = 1;
+    }
+    else if (d -> time > 50 && flag3 == 0)
+    {
+        force[1] = -200;
+        flag3 = 1;
+    }
+    else
+        force[1] = 0;
+    if (d -> time > 60)
+        d->qfrc_applied[1] = 0;
+    mjtNum torque[3] = {};
+    mjtNum point[3] = {0,0,0};
+    int body = 1;
+    std::cout << "force: " << force[0] << std::endl;
+    mju_zero(d->qfrc_applied + 3, 3);
+    mj_applyFT(m, d, force, torque, point, body, d->qfrc_applied);
 }
 
 // main function
@@ -126,6 +191,9 @@ int main(int argc, const char** argv)
         m = mj_loadXML(argv[1], 0, error, 1000);
     if( !m )
         mju_error_s("Load model error: %s", error);
+
+    // set mass
+    mj_setTotalmass(m, 100);
 
     // make data
     d = mj_makeData(m);
@@ -154,8 +222,9 @@ int main(int argc, const char** argv)
 
     // print some arguments
     // m -> nu = 2;
-    std::cout << m->nu << std::endl;
-    std::cout << d->ctrl << std::endl;
+    // std::cout << m -> nu << std::endl;
+    // std::cout << m -> nv << std::endl;
+    // std::cout << d -> ctrl << std::endl;
 
     // run main loop, target real-time simulation and 60 fps rendering
     while( !glfwWindowShouldClose(window) )
@@ -165,13 +234,19 @@ int main(int argc, const char** argv)
         //  this loop will finish on time for the next frame to be rendered at 60 fps.
         //  Otherwise add a cpu timer and exit this loop when it is time to render.
         mjtNum simstart = d->time;
-        while( (d->time - simstart < 1.0/60.0) && (d->time < 50) )
+        
+        while( d->time - simstart < 1.0/60.0)
         {
             mj_step1(m, d);
-            applyForceOnModel(m, d);
-            std::cout << m -> nu << "  " << d -> ctrl[0] << std::endl;
+            applyForceByModifyDqfrc_applied(m, d, 10, 2);
+            std::cout << d->qacc[0] << "  " << d->qacc[1] << "  " << d->qacc[2] << std::endl;
             std::cout << d -> time << std::endl;
             mj_step2(m, d);
+            // applyForceByMj_applyFT(m, d);
+            // std::cout << d->qfrc_applied[0] << "  " << d->qfrc_applied[1] << "  " << d->qfrc_applied[2] << "  "
+            //     << d->qfrc_applied[3] << "  " << d->qfrc_applied[4] << "  " << d->qfrc_applied[5] << std::endl;
+            // std::cout << d->time << std::endl;
+            // mj_step(m, d);
         }
 
 

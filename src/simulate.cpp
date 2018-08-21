@@ -1,14 +1,15 @@
-//---------------------------------//
-//  This file is part of MuJoCo    //
-//  Written by Emo Todorov         //
-//  Copyright (C) 2017 Roboti LLC  //
-//---------------------------------//
-
-
 #include "mujoco.h"
 #include "glfw3.h"
-#include "stdio.h"
-#include "string.h"
+#include <GL/glut.h>
+#include <stdio.h>
+#include <string.h>
+#include <iostream>
+#include <cstdlib>
+#include <vector>
+#include <fstream>
+#include <sstream>
+
+using namespace std;
  
 
 //-------------------------------- global variables -------------------------------------
@@ -19,7 +20,7 @@ mjData* d = 0;
 char lastfile[1000] = "";
 
 // user state
-bool paused = false;
+bool paused = true;
 bool showoption = false;
 bool showinfo = true;
 bool showfullscreen = false;
@@ -128,6 +129,63 @@ const char help_content[] =
 char opt_title[1000] = "";
 char opt_content[1000];
 
+int pointDimension;
+int positionDimension;
+int numberOfPoints;
+double timeStep;
+ifstream dataFile;
+vector<double> trajectory;
+
+int timeIndex = 0;
+vector<mjvGeom> geoms;
+
+// initialize trajectroy
+void initializeTrajectory(string dir)
+{
+    dataFile.open(dir.c_str());
+    string line;
+    string label;
+    int count = 0;
+
+    while (!dataFile.eof())
+    {
+        getline(dataFile, line);
+
+        stringstream ss(line);
+        ss >> label;
+
+        if (label.compare("timeStep:") == 0)
+        {
+            double val;
+            ss >> val;
+            timeStep = val;
+            continue;
+        }
+        if (label.compare("pointDimension:") == 0)
+        {
+            int val;
+            ss >> val;
+            pointDimension = val;
+            positionDimension = pointDimension / 3;
+            continue;
+        }
+        if (label.compare("numberOfPoints:") == 0)
+        {
+            int val;
+            ss >> val;
+            numberOfPoints = val;
+            continue;
+        }
+        if (label.compare(to_string(count)) == 0)
+        {
+            count ++;
+            double val;
+            ss >> val;
+            trajectory.push_back(val);
+            continue;
+        }
+    }
+}
 
 //-------------------------------- profiler and sensor ----------------------------------
 
@@ -957,6 +1015,29 @@ void makeoptionstring(const char* name, char key, char* buf)
     buf[cnt+4] = 0;
 }
 
+// change position
+void setPosition(int index)
+{
+    for (int i = 0; i < positionDimension; i++)
+        d->qpos[i] = trajectory[index * pointDimension + i];
+    mju_zero(d->qvel, positionDimension);
+    mju_zero(d->ctrl, positionDimension);
+    mju_zero(d->qfrc_applied, m->nv);
+}
+
+void drawPoint()
+{
+    glClearColor(0.0, 0.0, 0.0, 0.0);
+    glClear(GL_COLOR_BUFFER_BIT);
+    glColor3f(1.0, 0.0, 0.0);
+    glPointSize(40.0f);
+
+    glBegin(GL_POINTS);
+    glVertex3d(trajectory[timeIndex * pointDimension], trajectory[timeIndex * pointDimension + 1], trajectory[timeIndex * pointDimension + 2]);
+    glEnd();
+
+    glFlush();
+}
 
 // advance simulation
 void simulation(void)
@@ -964,9 +1045,6 @@ void simulation(void)
     // no model
     if( !m )
         return;
-
-    // clear timers
-    cleartimers(d);
 
     // paused
     if( paused )
@@ -982,31 +1060,68 @@ void simulation(void)
     // running
     else
     {
-        // slow motion factor: 10x
-        mjtNum factor = (slowmotion ? 10 : 1);
-
-        // advance effective simulation time by 1/refreshrate
-        mjtNum startsimtm = d->time;
-        while( (d->time-startsimtm)*factor<1.0/refreshrate )
+        if (timeIndex < numberOfPoints - 1)
         {
-            // clear old perturbations, apply new
-            mju_zero(d->xfrc_applied, 6*m->nbody);
-            if( pert.select>0 )
-            {
-                mjv_applyPerturbPose(m, d, &pert, 0);  // move mocap bodies only
-                mjv_applyPerturbForce(m, d, &pert);
-            }
-
-            // run mj_step and count
-            mj_step(m, d);
-
-            // break on reset
-            if( d->time<startsimtm )
-                break;
+            int oldIndex = timeIndex;
+            timeIndex = int(d->time * (1/timeStep));
+            if (oldIndex != timeIndex)
+                setPosition(timeIndex);
         }
+        mj_step(m,d);
     }
 }
 
+void initializeGeom(mjvGeom* geom)
+{
+    geom->type = mjGEOM_BOX;
+
+    geom->dataid = -1;
+    geom->objtype = mjOBJ_UNKNOWN;
+    geom->objid = -1;
+    geom->category = mjCAT_DECOR;
+    geom->texid = -1;
+    geom->texuniform = 0;
+    geom->texrepeat[0] = 1;
+    geom->texrepeat[1] = 1;
+    geom->emission = 0;
+    geom->specular = 0;
+    geom->shininess = 0;
+    geom->reflectance = 0;
+    
+    geom->size[0] = 0;
+    geom->size[1] = 0;
+    geom->size[2] = 0;
+    geom->rgba[0] = 1.0;
+    geom->rgba[1] = geom->rgba[2] = 0;
+    geom->rgba[3] = 1;
+    geom->pos[0] = float(trajectory[timeIndex * pointDimension]);
+    geom->pos[1] = float(trajectory[timeIndex * pointDimension + 1]);
+    geom->pos[2] = 0;
+    geom->mat[0] = 1;
+    geom->mat[1] = 1;
+    geom->mat[2] = 1;
+    memset(geom->label, 0, 100);
+    geom->label[0] = '.';
+}
+
+void addNewGeomToVector()
+{
+    mjvGeom* g = new mjvGeom;
+    initializeGeom(g);
+    geoms.push_back(*g);
+    delete g;
+}
+
+void addGeomsToScene()
+{
+    addNewGeomToVector();
+    for (int i = 0; i < geoms.size(); i++)
+    {
+        mjvGeom* g = scn.geoms + scn.ngeom;
+        *g = geoms[i];
+        scn.ngeom ++;
+    }
+}
 
 // render
 void render(GLFWwindow* window)
@@ -1092,9 +1207,13 @@ void render(GLFWwindow* window)
     // update scene
     mjv_updateScene(m, d, &vopt, &pert, &cam, mjCAT_ALL, &scn);
 
+    addGeomsToScene();
+    cout << scn.ngeom << endl;
+
+    mjr_setBuffer(mjFB_WINDOW, &con);
     // render
     mjr_render(rect, &scn, &con);
-
+    
     // show depth map
     if( showdepth )
     {
@@ -1267,6 +1386,11 @@ int main(int argc, const char** argv)
     // load model if filename given as argument
     if( argc==2 )
         loadmodel(window, argv[1]);
+
+    string data_dir = "../log/data2.txt";
+    initializeTrajectory(data_dir);
+    cout << timeStep << "  " << pointDimension << "  " << numberOfPoints << "  " << trajectory.size() << endl;
+    cout << scn.maxgeom << endl;
 
     // main loop
     while( !glfwWindowShouldClose(window) )
