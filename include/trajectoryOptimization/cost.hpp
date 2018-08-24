@@ -78,8 +78,8 @@ namespace trajectoryOptimization::cost{
 				};
 				std::for_each(numberOfPointsRange.begin(), numberOfPointsRange.end(), addTozPositionSquareSum);
 
-			//	return controlSquareSum + contactPositionSquareSum + zPositionSquareSum;
-				return controlSquareSum ;
+				return controlSquareSum + contactPositionSquareSum + zPositionSquareSum;
+				//return controlSquareSum ;
 			}  
 	};
 }//namespace

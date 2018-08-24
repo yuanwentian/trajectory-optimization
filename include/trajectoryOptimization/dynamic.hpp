@@ -68,12 +68,12 @@ namespace trajectoryOptimization::dynamic {
 		{
 			//mj_resetData(m, d);
 			
-			mju_copy(d->qpos, position, worldDimension);
-			mju_copy(d->qvel, velocity, worldDimension);
-			mju_copy(d->ctrl, control, worldDimension);
-			mj_forward(m, d);
+			//mju_copy(d->qpos, position, worldDimension);
+			//mju_copy(d->qvel, velocity, worldDimension);
+			//mju_copy(d->ctrl, control, worldDimension);
+			//mj_forward(m, d);
 
-			return d->qacc;
+			return control;
 		}		
 	};
 
