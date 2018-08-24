@@ -12,6 +12,7 @@ set(CMAKE_CXX_COMPILER_ID "GNU")
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
   "../include"
   "/home/taharabun/Documents/Ipopt-3.12.10/build/include"
+  "/home/taharabun/.mujoco/mjpro150/include"
   "/home/taharabun/Documents/Ipopt-3.12.10/build/include/coin"
   "rangev3-src/include"
   "/home/taharabun/Documents/mjpro150/include"

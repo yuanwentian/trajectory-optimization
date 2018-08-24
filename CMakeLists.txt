@@ -2,9 +2,9 @@ cmake_minimum_required(VERSION 3.8)
 set(CMAKE_CXX_STANDARD 17)
 
 option(traj_opt_build_tests "Build all of trajectoryOptimization's own tests." OFF)
-option(traj_opt_build_simulate "Build simulate from Mujoco." ON)
+option(traj_opt_build_simulate "Build simulate." OFF)
 if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR) # if building as top-level
-	option(traj_opt_build_samples "Build all of trajectoryOptimization's own samples." OFF)
+	option(traj_opt_build_samples "Build all of trajectoryOptimization's own samples." ON)
 else()
 	option(traj_opt_build_samples "Build all of trajectoryOptimization's own samples." OFF)
 endif()
@@ -32,7 +32,7 @@ target_include_directories(trajectoryOptimizationLib INTERFACE
 	$<BUILD_INTERFACE:${CMAKE_CURRENT_LIST_DIR}/include>
 	$<INSTALL_INTERFACE:include>
 	${IPOPT_DIR}/include
-	/home/taharabun/Documents/mjpro150/include
+	~/.mujoco/mjpro150/include
 )
 target_link_libraries(trajectoryOptimizationLib INTERFACE
 	Ipopt::Ipopt Rangev3::Rangev3 Mujoco::Mujoco

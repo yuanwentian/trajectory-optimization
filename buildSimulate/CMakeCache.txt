@@ -246,7 +246,7 @@ TrajectoryOptimization_SOURCE_DIR:STATIC=/home/taharabun/Projects/trajectory-opt
 //Build all of trajectoryOptimization's own samples.
 traj_opt_build_samples:BOOL=OFF
 
-//Build simulate from Mujoco.
+//Build simulate.
 traj_opt_build_simulate:BOOL=ON
 
 //Build all of trajectoryOptimization's own tests.

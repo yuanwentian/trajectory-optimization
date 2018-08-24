@@ -30,7 +30,7 @@ int main(int argv, char* argc[])
   const int controlDimension = worldDimension;
   const int timePointDimension = kinematicDimension + controlDimension;
   const int numTimePoints = 80;
-  const double timeStepSize = 0.1;
+  const double timeStepSize = 0.005;
   
   mjModel* m = NULL;
   mjData* d = NULL;

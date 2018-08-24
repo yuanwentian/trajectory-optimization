@@ -1,3 +1,0 @@
-/home/taharabun/Projects/trajectory-optimization/buildSample/CMakeFiles/edit_cache.dir
-/home/taharabun/Projects/trajectory-optimization/buildSample/CMakeFiles/rebuild_cache.dir
-/home/taharabun/Projects/trajectory-optimization/buildSample/CMakeFiles/trajectoryOptimizationSample.dir

@@ -6,5 +6,5 @@ CXX_FLAGS =   -std=gnu++1z
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/home/taharabun/Projects/trajectory-optimization/include -I/home/taharabun/Documents/Ipopt-3.12.10/build/include -isystem /home/taharabun/Documents/Ipopt-3.12.10/build/include/coin -isystem /home/taharabun/Projects/trajectory-optimization/buildSimulate/rangev3-src/include -isystem /home/taharabun/Documents/mjpro150/include 
+CXX_INCLUDES = -I/home/taharabun/Projects/trajectory-optimization/include -I/home/taharabun/Documents/Ipopt-3.12.10/build/include -I/home/taharabun/.mujoco/mjpro150/include -isystem /home/taharabun/Documents/Ipopt-3.12.10/build/include/coin -isystem /home/taharabun/Projects/trajectory-optimization/buildSimulate/rangev3-src/include -isystem /home/taharabun/Documents/mjpro150/include 
 

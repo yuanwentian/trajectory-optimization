@@ -6,7 +6,7 @@
 
 #IncludeRegexTransform: 
 
-/home/taharabun/Documents/mjpro150/include/glfw3.h
+/home/taharabun/.mujoco/mjpro150/include/glfw3.h
 stddef.h
 -
 stdint.h
@@ -46,35 +46,47 @@ GL/glext.h
 GL/glu.h
 -
 
-/home/taharabun/Documents/mjpro150/include/mjdata.h
+/home/taharabun/.mujoco/mjpro150/include/mjdata.h
 
-/home/taharabun/Documents/mjpro150/include/mjmodel.h
+/home/taharabun/.mujoco/mjpro150/include/mjmodel.h
 
-/home/taharabun/Documents/mjpro150/include/mjrender.h
+/home/taharabun/.mujoco/mjpro150/include/mjrender.h
 
-/home/taharabun/Documents/mjpro150/include/mjvisualize.h
+/home/taharabun/.mujoco/mjpro150/include/mjvisualize.h
 
-/home/taharabun/Documents/mjpro150/include/mujoco.h
+/home/taharabun/.mujoco/mjpro150/include/mujoco.h
 stdlib.h
-/home/taharabun/Documents/mjpro150/include/stdlib.h
+/home/taharabun/.mujoco/mjpro150/include/stdlib.h
 math.h
-/home/taharabun/Documents/mjpro150/include/math.h
+/home/taharabun/.mujoco/mjpro150/include/math.h
 mjmodel.h
-/home/taharabun/Documents/mjpro150/include/mjmodel.h
+/home/taharabun/.mujoco/mjpro150/include/mjmodel.h
 mjdata.h
-/home/taharabun/Documents/mjpro150/include/mjdata.h
+/home/taharabun/.mujoco/mjpro150/include/mjdata.h
 mjvisualize.h
-/home/taharabun/Documents/mjpro150/include/mjvisualize.h
+/home/taharabun/.mujoco/mjpro150/include/mjvisualize.h
 mjrender.h
-/home/taharabun/Documents/mjpro150/include/mjrender.h
+/home/taharabun/.mujoco/mjpro150/include/mjrender.h
 
 /home/taharabun/Projects/trajectory-optimization/src/simulate.cpp
 mujoco.h
 /home/taharabun/Projects/trajectory-optimization/src/mujoco.h
 glfw3.h
 /home/taharabun/Projects/trajectory-optimization/src/glfw3.h
+GL/glut.h
+-
 stdio.h
-/home/taharabun/Projects/trajectory-optimization/src/stdio.h
+-
 string.h
-/home/taharabun/Projects/trajectory-optimization/src/string.h
+-
+iostream
+-
+cstdlib
+-
+vector
+-
+fstream
+-
+sstream
+-
 

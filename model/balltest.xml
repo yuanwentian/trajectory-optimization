@@ -6,7 +6,7 @@
             <light diffuse="1.5 1.5 1.5" pos="0 0 2" dir="0 0 -1" mode="track"/>
             <joint axis="1 0 0" damping="0" name="slide0" pos="0 0 0" type="slide"/>
             <joint axis="0 1 0" damping="0" name="slide1" pos="0 0 0" type="slide"/>
-            <joint axis="0 0 1" damping="0" name="slide2" pos="0 0 0" type="slide"/>
+        <!--    <joint axis="0 0 1" damping="0" name="slide2" pos="0 0 0" type="slide"/>-->
             <geom type="sphere" size="0.2" mass="100" rgba="0 .9 0 1"/>
         </body>
 		<!-- <body mocap="true" name="mocap1" pos="4 4 0">
@@ -15,7 +15,7 @@
 		</body> -->
         <body name="box" pos="1.8 1.8 0">
             <light name="light2" pos="0 0 2" mode="fixed" />
-            <geom mass="10" size="0.2 0.2 0.2" type="box" rgba="0 0 0.9 1"/>
+            <geom mass="100" size="0.2 0.2 0.2" type="box" rgba="0 0 0.9 1"/>
             <!-- <joint axis="1 0 0" name="box:slidex" type="slide" />                
             <joint axis="0 1 0" name="box:slidey" type="slide" /> -->
         </body>
@@ -23,6 +23,6 @@
     <actuator>
         <motor gear="1" joint="slide0"/>
         <motor gear="1" joint="slide1"/>
-        <motor gear="1" joint="slide2"/>
+       <!--    <motor gear="1" joint="slide2"/> -->
     </actuator>
 </mujoco>

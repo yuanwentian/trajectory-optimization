@@ -4,11 +4,14 @@
 #include <range/v3/view.hpp> 
 
 #include "utilities.hpp"
+#include "constraintNew.hpp"
 
 
 namespace trajectoryOptimization::cost{
 
 	using namespace trajectoryOptimization;
+	using namespace trajectoryOptimization::constraint;
+	using namespace trajectoryOptimization::dynamic;
 
 	class GetControlSquareSum {
 		const unsigned numberOfPoints;
@@ -17,17 +20,22 @@ namespace trajectoryOptimization::cost{
 		const int trajectoryDimension;
 		const int controlStartIndex; 
 		const int controlEndIndex;
+		const int worldDimension;
 		std::vector<unsigned> controlIndices;
+		DynamicFunctionMujoco contactForce;
 		public:
 			GetControlSquareSum(const unsigned numberOfPoints,
 								const unsigned pointDimension,
-								const unsigned controlDimension):
+								const unsigned controlDimension,
+								DynamicFunctionMujoco contactForce):
 									numberOfPoints(numberOfPoints),
 									pointDimension(pointDimension),
 									controlDimension(controlDimension),
 									trajectoryDimension(numberOfPoints * pointDimension),
 									controlStartIndex(pointDimension - controlDimension),
-									controlEndIndex(pointDimension)
+									controlEndIndex(pointDimension),
+									contactForce(contactForce),
+									worldDimension(controlDimension)
 								{
 									assert(controlDimension<pointDimension);
 
@@ -50,7 +58,28 @@ namespace trajectoryOptimization::cost{
 
 				std::for_each(controlIndices.begin(), controlIndices.end(), addToControlSquareSum);
 
-				return controlSquareSum;
+				double contactPositionSquareSum = 0;
+				const auto addToContactPositionSquareSum = [&] (const unsigned index)
+				{
+					const auto nowPosition = trajectoryPointer + index * pointDimension;
+					const auto nowVelocity = nowPosition + worldDimension;
+					const auto nowControl = nowVelocity + worldDimension;
+					const auto force = contactForce(nowPosition, nowVelocity, nowControl);
+					contactPositionSquareSum += std::pow(force[0]/1000, 2);
+				};
+				std::vector<unsigned> numberOfPointsRange = ranges::view::ints((unsigned) 0, numberOfPoints);
+				std::for_each(numberOfPointsRange.begin(), numberOfPointsRange.end(), addToContactPositionSquareSum);
+
+				double zPositionSquareSum = 0;
+				const auto addTozPositionSquareSum = [&] (const unsigned index)
+				{
+					const auto nowPosition = trajectoryPointer + index * pointDimension;
+					zPositionSquareSum += std::pow(nowPosition[2], 2);
+				};
+				std::for_each(numberOfPointsRange.begin(), numberOfPointsRange.end(), addTozPositionSquareSum);
+
+			//	return controlSquareSum + contactPositionSquareSum + zPositionSquareSum;
+				return controlSquareSum ;
 			}  
 	};
 }//namespace

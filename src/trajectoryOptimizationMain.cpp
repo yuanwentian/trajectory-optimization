@@ -29,32 +29,33 @@ int main(int argv, char* argc[])
   const int kinematicDimension = worldDimension * 2;
   const int controlDimension = worldDimension;
   const int timePointDimension = kinematicDimension + controlDimension;
-  const int numTimePoints = 80;
-  const double timeStepSize = 0.1;
+  const int numTimePoints = 250;
+  const double timeStepSize = 1;
   
   mjModel* m = NULL;
   mjData* d = NULL;
   mj_activate("../mjkey.txt");    
   // load and compile model
   char error[1000] = "ERROR: could not load binary model!";
-  m = mj_loadXML("../model/ball2.xml", 0, error, 1000);
+  m = mj_loadXML("../model/ball.xml", 0, error, 1000);
   d = mj_makeData(m);
   
   const dynamic::DynamicFunctionMujoco mujocoDynamics = dynamic::GetAccelerationUsingMujoco(m, d, worldDimension, timeStepSize);
+  const dynamic::DynamicFunctionMujoco contactForce = dynamic::GetContactForceUsingMujoco(m, d, worldDimension, timeStepSize);
 
   const int numberVariablesX = timePointDimension * numTimePoints;
 
   const int startTimeIndex = 0;
   const numberVector startPoint = {0, 0, 0, 0, 0, 0, 0, 0, 0};
   const int goalTimeIndex = numTimePoints - 1;
-  const numberVector goalPoint = {5, 4, 0, 0, 0, 0, 0, 0, 0};
+  const numberVector goalPoint = {5, 5, 0, 0, 0, 0, 0, 0, 0};
 
   const numberVector xLowerBounds(numberVariablesX, -100);
   const numberVector xUpperBounds(numberVariablesX, 100);
 
   const numberVector xStartingPoint(numberVariablesX, 0);
 
-  const auto costFunction = cost::GetControlSquareSum(numTimePoints, timePointDimension, controlDimension);
+  const auto costFunction = cost::GetControlSquareSum(numTimePoints, timePointDimension, controlDimension, contactForce);
   EvaluateObjectiveFunction objectiveFunction = [costFunction](Index n, const Number* x) {
     return costFunction(x);
   };
@@ -72,13 +73,13 @@ int main(int argv, char* argc[])
                                                               startTimeIndex,
                                                               startPoint));
   
-  const unsigned randomTargetTimeIndex = 125;
-  const std::vector<double> randomTarget = {-2, 2, 0, 0, 0, 0, 0, 0, 0};
-  constraints.push_back(constraint::GetToKinematicGoalSquare(numTimePoints,
-                                                              timePointDimension,
-                                                              kinematicDimension,
-                                                              randomTargetTimeIndex,
-                                                              randomTarget));
+  const unsigned randomTargetTimeIndex = 45;
+  const std::vector<double> randomTarget = {4, 4, 0, 0, 0, 0, 0, 0, 0};
+  // constraints.push_back(constraint::GetToKinematicGoalSquare(numTimePoints,
+  //                                                             timePointDimension,
+  //                                                             kinematicDimension,
+  //                                                             randomTargetTimeIndex,
+  //                                                             randomTarget));
   
   const unsigned kinematicViolationConstraintStartIndex = 0;
   const unsigned kinematicViolationConstraintEndIndex = kinematicViolationConstraintStartIndex + numTimePoints - 1;
@@ -89,7 +90,14 @@ int main(int argv, char* argc[])
                                                                 kinematicViolationConstraintStartIndex,
                                                                 kinematicViolationConstraintEndIndex,
                                                                 timeStepSize);
-                  
+  // constraints = constraint::applyContactForceSquare(constraints,
+  //                                                   contactForce,
+  //                                                   timePointDimension,
+  //                                                   worldDimension,
+  //                                                   kinematicViolationConstraintStartIndex,
+  //                                                   kinematicViolationConstraintEndIndex,
+  //                                                   timeStepSize);
+
   constraints.push_back(constraint::GetToKinematicGoalSquare(numTimePoints,
                                                                 timePointDimension,
                                                                 kinematicDimension,
