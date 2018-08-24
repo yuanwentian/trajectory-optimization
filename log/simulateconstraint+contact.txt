@@ -1,6 +1,3 @@
-timeStep: 0.005
-pointDimension: 9
-numberOfPoints: 50
 0 1.599837e-05
 1 1.302551e-05
 2 4.001007e-05
