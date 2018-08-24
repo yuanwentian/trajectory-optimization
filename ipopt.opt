@@ -1,0 +1,16 @@
+#n_sens_steps 1
+#sens_boundcheck yes
+#sens_bound_eps -1e-10
+
+# Turn off the NLP scaling
+#nlp_scaling_method none
+
+#print_options_documentation no
+#run_sens yes
+
+
+## Change the initial barrier parameter
+#mu_init 1e-2
+
+# Set the max number of iterations
+#max_iter 1000
