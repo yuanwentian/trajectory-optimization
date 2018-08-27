@@ -1,0 +1,6 @@
+Fri Aug 24 15:40:04 2018
+WARNING: Nan, Inf or huge value in QPOS at DOF 0. The simulation is unstable. Time = 0.7950.
+
+Fri Aug 24 15:40:24 2018
+WARNING: Nan, Inf or huge value in QPOS at DOF 0. The simulation is unstable. Time = 0.7750.
+
