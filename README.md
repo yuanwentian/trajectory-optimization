@@ -16,7 +16,9 @@ Trajectory optimization is a software library for robotic motion planning. The c
 
 
 ### 2.2 Installation instructions
+
 #### 2.2.1 IPOPT Installation
+
 1) Download the source code from https://www.coin-or.org/download/source/Ipopt/ , and then upack IPOPT in the home directory.
 ```
 wget http://www.coin-or.org/download/source/Ipopt/Ipopt-3.12.4.tgz
@@ -45,17 +47,18 @@ make -j 4` #Compile using 4 cores (if you have them)
 make install
 ```
 
-#### CMake Installation
+#### 2.2.2 CMake Installation
 
 
 
-#### GNUPlot Installation
+#### 2.2.3 GNUPlot Installation
 `sudo apt-get install gnuplot`
 
-#### MuJoCo Installation
+#### 2.2.4 MuJoCo Installation
 
+#### 2.2.5 GTest Installation
 
-#### A `setup.sh` script for Mac-based system
+#### 2.2.6 `setup.sh` script for Mac-based system
 (A script `setup.sh` has been provided to install the first three dependencies on a Mac-based system. It will install Homebrew and use it to install the first three dependencies. To execute it, run `chmod +x setup.sh && ./setup.sh`.)
 
 Linux support has not been added to the script yet.
@@ -63,8 +66,11 @@ Linux support has not been added to the script yet.
 
 
 ### 2.3 Common Installation Issues
+
 If you have encountered one of the following issues, please try the suggestion below.
+
 #### 2.3.1 IPOPT related issues
+
 1) Could not find Blas
 ```
 sudo apt-get install gfortran
