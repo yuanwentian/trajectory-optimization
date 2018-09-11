@@ -66,7 +66,7 @@ make install
 #### 2.2.4 MuJoCo Installation
 1) If you do not have a license, get your license key following the website https://www.roboti.us/license.html .
 
-2) Download MuJoCo Pro 150 from MuJoCo website https://www.roboti.us/index.html , choose "mjpro150 linux"
+2) Download MuJoCo Pro 150 from MuJoCo website https://www.roboti.us/index.html , choose "mjpro150 linux".
 
 3) Unpack the file in your preferred location (home as an example), and **copy the license to the the bin folder** (~/mjpro150/bin).
 
@@ -89,9 +89,10 @@ simualte ../model/humanoid.xml
 
 You should be able to see a humanoid model falling down.
 
-(it is noted that the executable "simulate" was coded to search the license key file to the relative simulate path, so the key should be put into the bin folder)
+(it is noted that the executable "simulate" was coded to search the license key file to the relative simulate path, so the key should be put into the bin folder.)
 
 #### 2.2.5 GTest Installation
+
 
 #### 2.2.6 `setup.sh` script for Mac-based system
 (A script `setup.sh` has been provided to install the first three dependencies on a Mac-based system. It will install Homebrew and use it to install the first three dependencies. To execute it, run `chmod +x setup.sh && ./setup.sh`.)
@@ -102,9 +103,9 @@ Linux support has not been added to the script yet.
 
 ### 2.3 Common Installation Issues
 
-If you have encountered one of the following issues, please try the suggestion below.
+When installing or builidng executables using CMake, you may encounter one of the following issues. Please try the suggestion below.
 
-#### 2.3.1 IPOPT-related Installation Issues
+#### 2.3.1 IPOPT-related Issues
 
 1) Could not find Blas
 ```
@@ -114,8 +115,45 @@ sudo apt-get install gfortran
 
 You may need to update your gcc-5 to gcc-7 instructed by the following link https://gist.github.com/jlblancoc/99521194aba975286c80f93e47966dc5 . After that, When you make executable, you may run into “could not find -lgfortran”. You can solve this issue by copying all the files that named as "\*libgfortran"  in gcc 5 folder (4 files probably) into 7.3.0 folder (or your current gcc version).
 
-#### 2.3.2 MuJoCo-related Installation Issues
+#### 2.3.2 MuJoCo-related Issues (when using cmake)
 
+1) Missing libgl
+
+If you don't have libGL.so in usr/lib/x86_64-linux-gnu/ but have it in usr/lib/x86_64-linux-gnu/mesa , you may try the following solution.
+```
+ln -s /usr/lib/x86_64-linux-gnu/mesa/libGL.so /usr/lib/x86_64-linux-gnu/libGL.so
+```
+
+2) Missing libglfw
+
+Create a simbolic link libglfw.so  to libglfw.so.3 (in ~/mjpro150/bin folder), so that the missing glfw problem can be solved.
+
+```
+ln -s libglfw.so.3 libglfw.so
+```
+#### 2.3.3 mujoco-py Issues (optional)
+
+If you want to test mujoco-py from OpenAI https://github.com/openai/mujoco-py , here are a few problems you might encounter.
+
+1) If you accidentaly upgraded pip to pip 10 or above, you may run into this error “python3-pip installed but pip3 command not found” . Solution:
+```
+sudo apt-get remove python3-pip
+sudo apt-get install python3-pip</pre
+```
+2) Fatal error: GL/osmesa.h: No such file or directory #96. Solution(https://github.com/openai/mujoco-py/issues/96):
+```
+sudo apt-get install libosmesa6-dev
+```
+
+3) ImportError: No module named 'OpenGL'. Solution:
+```
+sudo apt-get install python3-opengl
+```
+
+4) ERROR: GLEW initalization error: Missing GL version. Solution: add the environment variable to ~/.bashrc. 
+```
+export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/nvidia-390
+```
 
 
 
