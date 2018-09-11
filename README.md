@@ -5,13 +5,21 @@
 2 Setup
 - 2.1 Third-Party Dependencies
 - 2.2 Installation Instructions
-  -- 2.2.1 IPOPT Installation
-  -- 2.2.2. CMake Installation
+  - 2.2.1 IPOPT Installation
+  - 2.2.2 CMake Installation
+  - 2.2.3 GNUPlot Installation
+  - 2.2.4 MuJoCo Installation
+  - 2.2.5 GTest Installation
   
 3 Building and Running Samples
-- 3.1 Library Building Instructions
+- 3.1 Building Library
+- 3.2 Running Tests
+- 3.3 Running Samples
 
 4 Common Installation Issues
+- 4.1 IPOPT-Related Issues
+- 4.2 MuJoCo-Related Issues (when using cmake)
+- 4.3 mujoco-py Issues (optional)
 
 5 Profiling Instructions
 
@@ -124,7 +132,7 @@ Linux support has not been added to the script yet.
 
 ## 3 Building and Running Samples
 
-### 3.1 Library Building Instructions
+### 3.1 Building Library
 
 TrajectoryOptimization can be easily used as a git submodule in any other CMake-based project. Let's walk through integrating TrajectoryOptimization into an existing source project.
 
