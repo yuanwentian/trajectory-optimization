@@ -23,8 +23,12 @@ Unpack IPOPT in the home directory.
 `tar xvzf Ipopt-3.12.4.tgz`
 
 2) Get IPOPT third-party packages:
-```cd ~/Ipopt-3.12.4/ThirdParty/Blas
-./get.Blas```
+```
+cd ~/Ipopt-3.12.4/ThirdParty/Blas
+./get.Blas
+
+```
+
 `cd ../Lapack`
 `./get.Lapack`
 `cd ../Mumps`
