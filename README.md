@@ -5,8 +5,8 @@
 2 Setup
 - 2.1 Third-Party Dependencies
 - 2.2 Installation Instructions
-  - 2.2.1 IPOPT Installation
-  - 2.2.2. CMake Installation
+-- 2.2.1 IPOPT Installation
+-- 2.2.2. CMake Installation
   
 3 Building and Running Samples
 - 3.1 Library Building Instructions
