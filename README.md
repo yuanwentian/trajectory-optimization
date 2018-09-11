@@ -8,11 +8,11 @@ Trajectory optimization is a software library for robotic motion planning. The c
 
 ### 2.1 Third-Party dependencies
 
-(1) [IPOPT](https://projects.coin-or.org/Ipopt)
-(2) [CMake](https://cmake.org/)
-(3) [GNUPlot](http://www.gnuplot.info/) (Optional, used for trajectory visualization)
-(4) [MuJoCo](http://www.mujoco.org)
-(5) [GTest](https://github.com/google/googletest)
+1) [IPOPT](https://projects.coin-or.org/Ipopt)
+2) [CMake](https://cmake.org/)
+3) [GNUPlot](http://www.gnuplot.info/) (Optional, used for trajectory visualization)
+4) [MuJoCo](http://www.mujoco.org)
+5) [GTest](https://github.com/google/googletest)
 
 
 ### 2.2 Installation instructions
@@ -23,8 +23,8 @@ Unpack IPOPT in the home directory.
 `tar xvzf Ipopt-3.12.4.tgz`
 
 2) Get IPOPT third-party packages:
-`cd ~/Ipopt-3.12.4/ThirdParty/Blas`
-`./get.Blas`
+```cd ~/Ipopt-3.12.4/ThirdParty/Blas
+./get.Blas```
 `cd ../Lapack`
 `./get.Lapack`
 `cd ../Mumps`
