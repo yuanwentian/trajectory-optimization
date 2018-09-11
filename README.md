@@ -61,7 +61,9 @@ make install
 ```
 
 #### 2.2.3 GNUPlot Installation
-`sudo apt-get install gnuplot`
+```
+sudo apt-get install gnuplot
+```
 
 #### 2.2.4 MuJoCo Installation
 1) If you do not have a license, get your license key following the website https://www.roboti.us/license.html .
