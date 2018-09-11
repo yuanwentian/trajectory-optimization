@@ -1,0 +1,3 @@
+/home/taharabun/Projects/trajectory_optimization/buildContactFree/CMakeFiles/edit_cache.dir
+/home/taharabun/Projects/trajectory_optimization/buildContactFree/CMakeFiles/rebuild_cache.dir
+/home/taharabun/Projects/trajectory_optimization/buildContactFree/CMakeFiles/ContactFree.dir

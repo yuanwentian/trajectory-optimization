@@ -3,8 +3,9 @@ set(CMAKE_CXX_STANDARD 17)
 
 option(traj_opt_build_tests "Build all of trajectoryOptimization's own tests." OFF)
 option(traj_opt_build_simulate "Build simulate." OFF)
+option(traj_opt_build_ContactFree "Build ContactFree." ON)
 if(CMAKE_SOURCE_DIR STREQUAL CMAKE_CURRENT_SOURCE_DIR) # if building as top-level
-	option(traj_opt_build_samples "Build all of trajectoryOptimization's own samples." ON)
+	option(traj_opt_build_samples "Build all of trajectoryOptimization's own samples." OFF)
 else()
 	option(traj_opt_build_samples "Build all of trajectoryOptimization's own samples." OFF)
 endif()
@@ -56,6 +57,21 @@ if (traj_opt_build_samples)
 			trajectoryOptimizationLib
 	)
 endif()
+
+if (traj_opt_build_ContactFree)
+	add_executable(ContactFree src/ContactFree.cpp)
+	message(${IPOPT_FOUND})
+	message(${IPOPT_INCLUDE_DIRS})
+	message(${IPOPT_DIR})
+	#target_include_directories(trajectoryOptimizationSample PRIVATE ${IPOPT_DIR}/include)
+	target_link_libraries(ContactFree
+		PUBLIC
+			Ipopt::Ipopt Rangev3::Rangev3 Mujoco::Mujoco
+		PRIVATE
+			trajectoryOptimizationLib
+	)
+endif()
+
 
 if (traj_opt_build_simulate)
 	add_executable(simulate src/simulate.cpp)

@@ -24,13 +24,14 @@ int main(int argv, char* argc[])
   const char* velocityFilename = "velocity.txt";
   const char* controlFilename = "control.txt";
 
-  const int worldDimension = 3;
+  //const int worldDimension = 3;
+    const int worldDimension = 3;
   // pos, vel, acc (control)
   const int kinematicDimension = worldDimension * 2;
   const int controlDimension = worldDimension;
   const int timePointDimension = kinematicDimension + controlDimension;
-  const int numTimePoints = 100;
-  const double timeStepSize = 1;
+  const int numTimePoints = 80;
+  const double timeStepSize = 0.5;
   
   mjModel* m = NULL;
   mjData* d = NULL;
@@ -73,18 +74,19 @@ int main(int argv, char* argc[])
                                                               startTimeIndex,
                                                               startPoint));
   
-  const unsigned randomTargetTimeIndex = 60;
-  const std::vector<double> randomTarget = {0, 4, 0, 0, 0, 0, 0, 0, 0};
+  const unsigned randomTargetTimeIndex = 50;
+  const std::vector<double> randomTarget = {0, 5, 0, 0, 0, 0, 0, 0, 0};
   // constraints.push_back(constraint::GetToKinematicGoalSquare(numTimePoints,
   //                                                             timePointDimension,
   //                                                             kinematicDimension,
   //                                                             randomTargetTimeIndex,
   //                                                             randomTarget));
-   constraints.push_back(constraint::GetToKinematicGoalSquare(numTimePoints,
-                                                               timePointDimension,
-                                                               kinematicDimension,
-                                                               randomTargetTimeIndex,
-                                                               randomTarget));
+constraints.push_back(constraint::GetToKinematicGoalSquare(numTimePoints,
+                                                            timePointDimension,
+                                                            kinematicDimension,
+                                                           randomTargetTimeIndex,
+                                                            randomTarget));
+
   
   const unsigned kinematicViolationConstraintStartIndex = 0;
   const unsigned kinematicViolationConstraintEndIndex = kinematicViolationConstraintStartIndex + numTimePoints - 1;
@@ -102,13 +104,15 @@ int main(int argv, char* argc[])
   //                                                   kinematicViolationConstraintStartIndex,
   //                                                   kinematicViolationConstraintEndIndex,
   //                                                   timeStepSize);
-   constraints = constraint::applyContactForceSquare(constraints,
-                                                     contactForce,
-                                                     timePointDimension,
-                                                     worldDimension,
-                                                     kinematicViolationConstraintStartIndex,
-                                                     kinematicViolationConstraintEndIndex,
-                                                     timeStepSize);
+constraints = constraint::applyContactForceSquare(constraints,
+                                                  contactForce,
+                                                timePointDimension,
+                                                   worldDimension,
+                                                 kinematicViolationConstraintStartIndex,
+                                                kinematicViolationConstraintEndIndex,
+                                                  timeStepSize);
+
+
 
 
   constraints.push_back(constraint::GetToKinematicGoalSquare(numTimePoints,
