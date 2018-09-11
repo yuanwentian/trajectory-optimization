@@ -47,6 +47,8 @@ make install
 
 #### CMake Installation
 
+
+
 #### GNUPlot Installation
 `sudo apt-get install gnuplot`
 
@@ -62,10 +64,12 @@ Linux support has not been added to the script yet.
 
 ### 2.3 Common Installation Issues
 If you have encountered one of the following issues, please try the suggestion below.
-#### 2.3.1 IPOPT: could not find Blas.
+#### 2.3.1 IPOPT related issues
+1) Could not find Blas
 ```
 sudo apt-get install gfortran
 ```
+2) 
 
 #### 2.2.1 IPOPT Installation
 
