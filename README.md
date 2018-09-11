@@ -1,4 +1,15 @@
 # Trajectory Optimization Library
+## Content
+1 Introduction
+2 Setup
+- 2.1 Third-Party Dependencies
+- 2.2 Installation Instructions
+  - 2.2.1 IPOPT Installation
+  - 2.2.2. CMake Installation
+3 Building and Running Samples
+- 3.1 Library Building Instructions
+4 Common Installation Issues
+5 Profiling Instructions
 
 ## 1 Introduction
 
@@ -15,7 +26,7 @@ Trajectory optimization is a software library for robotic motion planning. The c
 5) [GTest](https://github.com/google/googletest)
 
 
-### 2.2 Installation instructions
+### 2.2 Installation Instructions
 
 #### 2.2.1 IPOPT Installation
 
@@ -107,9 +118,10 @@ You should be able to see a humanoid model falling down.
 Linux support has not been added to the script yet.
 
 
-## 3 Building and running samples
+## 3 Building and Running Samples
 
-### 3.1 Instruction on how to build trajectory optimization library using CMake
+### 3.1 Library Building Instructions
+
 TrajectoryOptimization can be easily used as a git submodule in any other CMake-based project. Let's walk through integrating TrajectoryOptimization into an existing source project.
 
 1) cd into your project directory, `git init` if it isn't already a git repository.
@@ -132,11 +144,11 @@ Now you can build software using TrajectoryOptimization!
 
 To ever recompile and rerun, just cd into `build/` and run `make && ./[yourExecutableName]`.
 
-### 3.2 Running tests
+### 3.2 Running Tests
 
 To build tests, run cmake like this: `cmake -Dtraj_opt_build_tests=ON ..`. Then cd into `lib/trajectoryOptimization` and run `ctest`.
 
-### 3.3 Running samples
+### 3.3 Running Samples
 
 To build samples, run cmake like this: `cmake -Dtraj_opt_build_samples=ON ..`. Then cd into `lib/trajectoryOptimization` and run `./trajectoryOptimizationSample`. The sample currently optimizes a 3D trajectory. Inspect [the source](src/trajectoryOptimizationMain.cpp) for more information and to learn about usage.
 
@@ -145,7 +157,7 @@ To build samples, run cmake like this: `cmake -Dtraj_opt_build_samples=ON ..`. T
 
 When installing or builidng executables using CMake, you may encounter one of the following issues. Please try the suggestion below.
 
-### 4.1 IPOPT-related Issues
+### 4.1 IPOPT-Related Issues
 
 1) Could not find Blas: Solution:
 ```
@@ -153,7 +165,7 @@ sudo apt-get install gfortran
 ```
 2) Could not find -lgfortran: You may need to update your gcc-5 to gcc-7 instructed by the following link https://gist.github.com/jlblancoc/99521194aba975286c80f93e47966dc5 . After that, When you make executable, you may run into “could not find -lgfortran”. You can solve this issue by copying all the files that named as "\*libgfortran"  in gcc 5 folder (4 files probably) into 7.3.0 folder (or your current gcc version).
 
-### 4.2 MuJoCo-related Issues (when using cmake)
+### 4.2 MuJoCo-Related Issues (when using cmake)
 
 1) Missing libgl: If you don't have libGL.so in usr/lib/x86_64-linux-gnu/ but have it in usr/lib/x86_64-linux-gnu/mesa , you may try the following solution.
 ```
@@ -189,8 +201,5 @@ sudo apt-get install python3-opengl
 export LD_LIBRARY_PATH=$LD_LIBRARY_PATH:/usr/lib/nvidia-390
 ```
 
-## 4 Notes on MuJoCo
-
-
-## 5 Instructions on Profiling
+## 5 Profiling Instructions
 Tool: valgrind
