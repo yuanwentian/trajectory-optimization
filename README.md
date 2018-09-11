@@ -75,7 +75,9 @@ If you have encountered one of the following issues, please try the suggestion b
 ```
 sudo apt-get install gfortran
 ```
-2) You may need to update your gcc-5 to gcc-7 instructed by the following link https://gist.github.com/jlblancoc/99521194aba975286c80f93e47966dc5 . After that, When you make executable, you may run into “could not find -lgfortran”. You can solve this issue by copying filename formed as "\*libgfortran" in gcc 5 (4 files probably in gcc 5) into 7.3.0 (or your current gcc version).
+2) Could not find -lgfortran
+
+You may need to update your gcc-5 to gcc-7 instructed by the following link https://gist.github.com/jlblancoc/99521194aba975286c80f93e47966dc5 . After that, When you make executable, you may run into “could not find -lgfortran”. You can solve this issue by copying filename formed as "\*libgfortran" in gcc 5 (4 files probably in gcc 5) into 7.3.0 (or your current gcc version).
 
 
 #### 2.2.1 IPOPT Installation
