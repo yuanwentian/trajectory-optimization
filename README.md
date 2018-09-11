@@ -19,8 +19,10 @@ Trajectory optimization is a software library for robotic motion planning. The c
 #### IPOPT Installation
 1) Download the source code from https://www.coin-or.org/download/source/Ipopt/ .
 `wget http://www.coin-or.org/download/source/Ipopt/Ipopt-3.12.4.tgz`
+
 Unpack IPOPT in the home directory.
 `tar xvzf Ipopt-3.12.4.tgz`
+
 2) Get IPOPT third-party packages:
 `cd ~/Ipopt-3.12.4/ThirdParty/Blas`
 `./get.Blas`
@@ -31,6 +33,7 @@ Unpack IPOPT in the home directory.
 `cd ../Metis`
 `./get.Metis`
 `cd ../../`
+
 3) Compile IPOPT:
 `cd ~/Ipopt-3.12.4/`
 `mkdir build`
