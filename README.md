@@ -49,12 +49,45 @@ make install
 
 #### 2.2.2 CMake Installation
 
+1) Download the source code from https://cmake.org/download/ , choose "cmake-3.12.2.tar.gz".
 
+2) Unpack the file in your preferred location, and then configure CMake.
+
+```
+tar -zxvf xx.tar.gz 
+./bootstrap 
+make 
+make install
+```
 
 #### 2.2.3 GNUPlot Installation
 `sudo apt-get install gnuplot`
 
 #### 2.2.4 MuJoCo Installation
+1) If you do not have a license, get your license key following the website https://www.roboti.us/license.html .
+
+2) Download MuJoCo Pro 150 from MuJoCo website https://www.roboti.us/index.html , choose "mjpro150 linux"
+
+3) Unpack the file in your preferred location (home as an example), and **copy the license to the the bin folder** (~/mjpro150/bin).
+
+4) Add the environment variable to ~/.bashrc. `nano ~/.bashrc`
+
+```
+export LD_LIBRARY_PATH=~/mjpro150/bin #your own location
+export PATH="$LD_LIBRARY_PATH:$PATH"
+```
+`source ~/.bashrc`
+
+5) Give it a try! 
+
+```
+cd ~/mjpro150/bin
+simualte ../model/humanoid.xml
+```
+
+You should be able to see a humanoid model falling down.
+
+(it is noted that the executable "simulate" was coded to search the license key file to the relative simulate path, so the key should be put into the bin folder)
 
 #### 2.2.5 GTest Installation
 
@@ -69,7 +102,7 @@ Linux support has not been added to the script yet.
 
 If you have encountered one of the following issues, please try the suggestion below.
 
-#### 2.3.1 IPOPT related issues
+#### 2.3.1 IPOPT-related Installation Issues
 
 1) Could not find Blas
 ```
@@ -79,8 +112,8 @@ sudo apt-get install gfortran
 
 You may need to update your gcc-5 to gcc-7 instructed by the following link https://gist.github.com/jlblancoc/99521194aba975286c80f93e47966dc5 . After that, When you make executable, you may run into “could not find -lgfortran”. You can solve this issue by copying all the files that named as "\*libgfortran"  in gcc 5 folder (4 files probably) into 7.3.0 folder (or your current gcc version).
 
+#### 2.3.2 MuJoCo-related Installation Issues
 
-#### 2.2.1 IPOPT Installation
 
 
 
