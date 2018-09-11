@@ -36,12 +36,14 @@ cd ../Metis
 cd ../../
 ```
 3) Compile IPOPT:
-`cd ~/Ipopt-3.12.4/`
-`mkdir build`
-`cd build`
-`../configure`
-`make -j 4` #Compile using 4 cores (if you have them) 
-`make install`
+```
+cd ~/Ipopt-3.12.4/
+mkdir build
+cd build
+../configure
+make -j 4` #Compile using 4 cores (if you have them) 
+make install
+```
 
 #### CMake Installation
 
