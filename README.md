@@ -26,17 +26,14 @@ Unpack IPOPT in the home directory.
 ```
 cd ~/Ipopt-3.12.4/ThirdParty/Blas
 ./get.Blas
-
+cd ../Lapack
+./get.Lapack
+cd ../Mumps
+./get.Mumps
+cd ../Metis
+./get.Metis
+cd ../../
 ```
-
-`cd ../Lapack`
-`./get.Lapack`
-`cd ../Mumps`
-`./get.Mumps`
-`cd ../Metis`
-`./get.Metis`
-`cd ../../`
-
 3) Compile IPOPT:
 `cd ~/Ipopt-3.12.4/`
 `mkdir build`
