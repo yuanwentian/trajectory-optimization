@@ -1,14 +1,54 @@
 # Trajectory Optimization Library
 
+## Introduction
+
+Trajectory optimization is a software library for robotic motion planning. The core libraries are implemented in C++. The library has been tested on Ubuntu 16.04.
+
 ## Setup
 
-### Third-Party dependencies that will need to be needed
+### Third-Party dependencies
 
-1) [Ipopt](https://projects.coin-or.org/Ipopt)
+1) [IPOPT](https://projects.coin-or.org/Ipopt)
 2) [CMake](https://cmake.org/)
 3) [GNUPlot](http://www.gnuplot.info/) (Optional, used for trajectory visualization)
+4) [MuJoCo](http://www.mujoco.org)
+5) [GTest](https://github.com/google/googletest)
 
-A script `setup.sh` has been provided to install these dependencies on a Mac-based system. It will install Homebrew and use it to install these dependencies. To execute it, run `chmod +x setup.sh && ./setup.sh`.
+
+### Installation instructions
+#### IPOPT Installation
+1) Download the source code from https://www.coin-or.org/download/source/Ipopt/ .
+`wget http://www.coin-or.org/download/source/Ipopt/Ipopt-3.12.4.tgz`
+Unpack IPOPT in the home directory.
+`tar xvzf Ipopt-3.12.4.tgz`
+2) Get IPOPT third-party packages:
+`cd ~/Ipopt-3.12.4/ThirdParty/Blas`
+`./get.Blas`
+`cd ../Lapack`
+`./get.Lapack`
+`cd ../Mumps`
+`./get.Mumps`
+`cd ../Metis`
+`./get.Metis`
+`cd ../../`
+3) Compile IPOPT:
+`cd ~/Ipopt-3.12.4/`
+`mkdir build`
+`cd build`
+`../configure`
+`make -j 4` #Compile using 4 cores (if you have them) 
+`make install`
+
+#### CMake Installation
+
+#### GNUPlot Installation
+`sudo apt-get install gnuplot`
+
+#### MuJoCo Installation
+
+
+#### A `setup.sh` script for Mac-based system
+(A script `setup.sh` has been provided to install the first three dependencies on a Mac-based system. It will install Homebrew and use it to install the first three dependencies. To execute it, run `chmod +x setup.sh && ./setup.sh`.)
 
 Linux support has not been added to the script yet.
 
