@@ -2,8 +2,6 @@
 
 ## 1 Introduction
 
-<script src="https://gist.github.com/jlblancoc/99521194aba975286c80f93e47966dc5.js"></script>
-
 Trajectory optimization is a software library for robotic motion planning. The core libraries are implemented in C++. The library has been tested on Ubuntu 16.04.
 
 ## 2 Setup
