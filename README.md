@@ -70,7 +70,9 @@ make install
 
 3) Unpack the file in your preferred location (home as an example), and **copy the license to the the bin folder** (~/mjpro150/bin).
 
-4) Add the environment variable to ~/.bashrc. `nano ~/.bashrc`
+4) Add the environment variable to ~/.bashrc. 
+
+`nano ~/.bashrc`
 
 ```
 export LD_LIBRARY_PATH=~/mjpro150/bin #your own location
