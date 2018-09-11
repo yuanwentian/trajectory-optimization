@@ -72,13 +72,18 @@ make install
 
 4) Add the environment variable to ~/.bashrc. 
 
-`nano ~/.bashrc`
+```
+nano ~/.bashrc
+```
 
 ```
 export LD_LIBRARY_PATH=~/mjpro150/bin #your own location
 export PATH="$LD_LIBRARY_PATH:$PATH"
 ```
-`source ~/.bashrc`
+
+```
+source ~/.bashrc
+```
 
 5) Give it a try! 
 
@@ -94,7 +99,7 @@ You should be able to see a humanoid model falling down.
 #### 2.2.5 GTest Installation
 
 
-#### 2.2.6 `setup.sh` script for Mac-based system
+#### 2.2.6 A `setup.sh` script for Mac-based system
 (A script `setup.sh` has been provided to install the first three dependencies on a Mac-based system. It will install Homebrew and use it to install the first three dependencies. To execute it, run `chmod +x setup.sh && ./setup.sh`.)
 
 Linux support has not been added to the script yet.
@@ -107,26 +112,20 @@ When installing or builidng executables using CMake, you may encounter one of th
 
 #### 2.3.1 IPOPT-related Issues
 
-1) Could not find Blas
+1) Could not find Blas: Solution:
 ```
 sudo apt-get install gfortran
 ```
-2) Could not find -lgfortran
-
-You may need to update your gcc-5 to gcc-7 instructed by the following link https://gist.github.com/jlblancoc/99521194aba975286c80f93e47966dc5 . After that, When you make executable, you may run into “could not find -lgfortran”. You can solve this issue by copying all the files that named as "\*libgfortran"  in gcc 5 folder (4 files probably) into 7.3.0 folder (or your current gcc version).
+2) Could not find -lgfortran: You may need to update your gcc-5 to gcc-7 instructed by the following link https://gist.github.com/jlblancoc/99521194aba975286c80f93e47966dc5 . After that, When you make executable, you may run into “could not find -lgfortran”. You can solve this issue by copying all the files that named as "\*libgfortran"  in gcc 5 folder (4 files probably) into 7.3.0 folder (or your current gcc version).
 
 #### 2.3.2 MuJoCo-related Issues (when using cmake)
 
-1) Missing libgl
-
-If you don't have libGL.so in usr/lib/x86_64-linux-gnu/ but have it in usr/lib/x86_64-linux-gnu/mesa , you may try the following solution.
+1) Missing libgl: If you don't have libGL.so in usr/lib/x86_64-linux-gnu/ but have it in usr/lib/x86_64-linux-gnu/mesa , you may try the following solution.
 ```
 ln -s /usr/lib/x86_64-linux-gnu/mesa/libGL.so /usr/lib/x86_64-linux-gnu/libGL.so
 ```
 
-2) Missing libglfw
-
-Create a simbolic link libglfw.so  to libglfw.so.3 (in ~/mjpro150/bin folder), so that the missing glfw problem can be solved.
+2) Missing libglfw: Create a simbolic link libglfw.so  to libglfw.so.3 (in ~/mjpro150/bin folder), so that the missing glfw problem can be solved.
 
 ```
 ln -s libglfw.so.3 libglfw.so
