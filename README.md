@@ -1,12 +1,12 @@
 # Trajectory Optimization Library
 
-## Introduction
+## 1 Introduction
 
 Trajectory optimization is a software library for robotic motion planning. The core libraries are implemented in C++. The library has been tested on Ubuntu 16.04.
 
-## Setup
+## 2 Setup
 
-### Third-Party dependencies
+### 2.1 Third-Party dependencies
 
 1) [IPOPT](https://projects.coin-or.org/Ipopt)
 2) [CMake](https://cmake.org/)
@@ -15,8 +15,8 @@ Trajectory optimization is a software library for robotic motion planning. The c
 5) [GTest](https://github.com/google/googletest)
 
 
-### Installation instructions
-#### IPOPT Installation
+### 2.2 Installation instructions
+#### 2.2.1 IPOPT Installation
 1) Download the source code from https://www.coin-or.org/download/source/Ipopt/ .
 `wget http://www.coin-or.org/download/source/Ipopt/Ipopt-3.12.4.tgz`
 Unpack IPOPT in the home directory.
