@@ -1,5 +1,5 @@
 # Trajectory Optimization Library
-## Content
+Contents:
 1 Introduction
 
 2 Setup
