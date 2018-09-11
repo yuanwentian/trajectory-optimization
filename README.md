@@ -58,6 +58,19 @@ make install
 
 Linux support has not been added to the script yet.
 
+
+
+### 2.3 Common Installation Issues
+If you have encountered one of the following issues, please try the suggestion below.
+#### 2.3.1 IPOPT: could not find Blas.
+```
+sudo apt-get install gfortran
+```
+
+#### 2.2.1 IPOPT Installation
+
+
+
 ### How to use TrajectoryOptimization
 
 TrajectoryOptimization can be easily used as a git submodule in any other CMake-based project. Let's walk through integrating TrajectoryOptimization into an existing source project.
